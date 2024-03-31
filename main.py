@@ -9,7 +9,7 @@ cap = cv2.VideoCapture('C:/Users/user/Desktop/yolcu.mp4')
 prev_frame = None
 
 while True:
-    cam_vector = [0,0] #decrease the cam vector
+    cam_vector = [0,0] #write your cam vector with (y,x) vector type
     ret, frame = cap.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -19,10 +19,10 @@ while True:
         for y in range(0, frame.shape[0], 30):
             for x in range(0, frame.shape[1], 30):
                 fx, fy = flow[y, x] - cam_vector
-                if abs(fx+fy) > 2:
+                if abs(fx+fy) > 2: #increase or decrease for optimum result
                     cv2.arrowedLine(frame, (x, y), (int(x + fx), int(y + fy)), (0, 0, 255), thickness=3)
                     print(f"obj detected in: {x}, {y}")
-                    speed = math.sqrt(fx**2 + fy**2)
+                    speed = math.sqrt(fx**2 + fy**2) #speed estimation with derivative 
                     print(speed)
                 else:
                     cv2.arrowedLine(frame, (x, y), (int(x + fx), int(y + fy)), (0, 255, 0), thickness=3)
